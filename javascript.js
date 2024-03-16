@@ -30,27 +30,54 @@ function player(playerName, playerMark) {
 
 
 const gamePlay = (function() {
-    let player1
-    let player2
-    let activePlayer
-    let rounds
+    let player1;
+    let player2;
+    let activePlayer;
+    let round;
 
     const startGame = function() {
+        gameBoard.createGameSquares();
         player1 = player(prompt("What's your name Player 1?", "Tic"), "X")
         player2 = player(prompt("What's your name Player 2?", "Tac"), "O")
-        rounds = 1
+        round = 1
         do {
             activePlayer = (rounds % 2 === 0) ? player2 : player1;
-            /* turn.makePlayerMove(activePlayer.getPlayerInfo())*/
-            rounds++;
-        } while (/*!(getWinningCondition()) ||*/ rounds <= 9);
-            // check if last round is needed when assuming tie
+            alert(`It's ${activePlayer.getPlayerInfo().playerName}'s turn`)
+            turn.makePlayerMove(activePlayer.getPlayerInfo());
+            round++;
+        } while (/*!(getWinningCondition()) ||*/ round <= 9);
         /* getWinningMessage();*/
     }
-    /* const getActivePlayer = () => activePlayer.getPlayerInfo(); */
-    // not sure need ^ as can just send active player info in startGame, check later
 
-    return { startGame, /*getActivePlayer*/ }
+    return { startGame };
 })();
 
-gamePlay.startGame()
+
+const turn = (function() {
+    let selectedSquare;
+
+    const chooseSquare = function() {
+        selectedSquare = prompt("Which square (from 1-9) do you choose?")
+    }
+    const makePlayerMove = function(activePlayerInfo) {
+        let tries = 0
+        do {
+            chooseSquare();
+            if (gameBoard.getSquareStatus(selectedSquare) === null) {
+                gameBoard.updateSquare(selectedSquare, activePlayerInfo.playerMark);
+                break
+            }
+            alert("Please choose a free square")
+            tries++
+        } while (tries < 3);
+        
+    }
+
+    return { makePlayerMove };
+})();
+
+
+gamePlay.startGame();
+// gameBoard.createGameSquares()
+// console.log(gameBoard.gameSquares)
+// console.log(gameBoard.getSquareStatus(1))
