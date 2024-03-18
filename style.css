@@ -1,0 +1,44 @@
+html {
+    box-sizing: border-box;
+}
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+body {
+    display: grid;
+    grid-template-rows: 1fr 10fr;
+}
+
+main {
+    display: grid;
+    grid-template: 1fr 10fr / 1fr 4fr 1fr;
+    grid-template-areas:  
+                        ". button ."
+                        "player1 gameboard player2";
+}
+
+.start-button {
+    grid-area: button;
+}
+
+.player.one {
+    grid-area: player1;
+}
+
+.game-board {
+    grid-area: gameboard;
+}
+
+.player.two {
+    grid-area: player2;
+}
+
+.game-board {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(10px, 1fr));
+}
+
+.game-board > div {
+    border: pink solid 1px;
+}
