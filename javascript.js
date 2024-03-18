@@ -45,6 +45,7 @@ const gamePlay = (function() {
             alert(`It's ${activePlayer.playerName}'s turn`);
             turn.makePlayerMove(activePlayer);
             round++;
+            displayBoard.updateBoard();
         } while (!(win.getWinCondition(activePlayer)) && round <= 9);
         win.getWinMessage(activePlayer);
     }
@@ -111,6 +112,19 @@ const win = (function() {
 
     return { getWinMessage, getWinCondition };
     })();
+
+
+const displayBoard = (function() {
+    const boardSquares = document.querySelectorAll(".square");
+
+    const updateBoard = function() {
+        for (let i = 0; i < boardSquares.length; i++) {
+        boardSquares[i].textContent = gameBoard.getSquareStatus(i+1);
+        }
+    }
+
+    return { updateBoard };
+})();
 
 gamePlay.startGame();
 while (prompt("Play again?", "yes") === "yes") {
