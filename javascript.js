@@ -39,7 +39,7 @@ const gamePlay = (function() {
         gameBoard.createGameSquares();
         player1 = player(prompt("What's your name Player 1?", "Tic"), "X").getPlayerInfo();
         player2 = player(prompt("What's your name Player 2?", "Tac"), "O").getPlayerInfo();
-        displayBoard.loadBoard();
+        display.loadBoard();
         activePlayer = player1;
         round = 1;
     };
@@ -94,8 +94,9 @@ const win = (function() {
     })();
 
 
-const displayBoard = (function() {
+const display = (function() {
     const boardSquares = document.querySelectorAll(".square");
+    const startButton = document.querySelector(".start-button");
 
     function chooseSquare(e) {
         let selectedSquare = e.target.getAttribute('data-square-number');
@@ -106,11 +107,15 @@ const displayBoard = (function() {
     }
     const loadBoard = function() {
         for (let i = 0; i < boardSquares.length; i++) {
+            boardSquares[i].textContent = "";
             boardSquares[i].addEventListener('click', chooseSquare);
         }
     };
+    const start = function() {
+        startButton.addEventListener('click', gamePlay.startGame);
+    }
 
-    return { loadBoard };
+    return { loadBoard, start };
 })();
 
-gamePlay.startGame();
+display.start();
