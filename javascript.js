@@ -7,10 +7,10 @@ const gameBoard = (function() {
             let square = {squareNum: i, status: null,};
             gameSquares.push(square);
         }
-    }
+    };
     const updateSquare = function (squareNum, updatedStatus) {
         gameSquares[squareNum - 1].status = updatedStatus;
-    }
+    };
     const getSquareStatus = (squareNum) => gameSquares[squareNum - 1].status;
 
     return { updateSquare, getSquareStatus, createGameSquares };
@@ -37,16 +37,16 @@ const gamePlay = (function() {
 
     const startGame = function() {
         gameBoard.createGameSquares();
-        player1 = player(prompt("What's your name Player 1?", "Tic"), "X")
-        player2 = player(prompt("What's your name Player 2?", "Tac"), "O")
-        round = 1
+        player1 = player(prompt("What's your name Player 1?", "Tic"), "X").getPlayerInfo();
+        player2 = player(prompt("What's your name Player 2?", "Tac"), "O").getPlayerInfo();
+        round = 1;
         do {
-            activePlayer = (rounds % 2 === 0) ? player2 : player1;
-            alert(`It's ${activePlayer.getPlayerInfo().playerName}'s turn`)
-            turn.makePlayerMove(activePlayer.getPlayerInfo());
+            activePlayer = (round % 2 === 0) ? player2 : player1;
+            alert(`It's ${activePlayer.playerName}'s turn`);
+            turn.makePlayerMove(activePlayer);
             round++;
-        } while (/*!(getWinningCondition()) ||*/ round <= 9);
-        /* getWinningMessage();*/
+        } while (!(win.getWinCondition(activePlayer)) && round <= 9);
+        win.getWinMessage(activePlayer);
     }
 
     return { startGame };
@@ -57,27 +57,62 @@ const turn = (function() {
     let selectedSquare;
 
     const chooseSquare = function() {
-        selectedSquare = prompt("Which square (from 1-9) do you choose?")
+        selectedSquare = prompt("Which square (from 1-9) do you choose?");
     }
     const makePlayerMove = function(activePlayerInfo) {
-        let tries = 0
+        let tries = 0;
         do {
             chooseSquare();
             if (gameBoard.getSquareStatus(selectedSquare) === null) {
                 gameBoard.updateSquare(selectedSquare, activePlayerInfo.playerMark);
-                break
+                break;
             }
-            alert("Please choose a free square")
-            tries++
+            alert("Please choose a free square");
+            tries++;
         } while (tries < 3);
         
     }
+    const getSelectedSquare = () => selectedSquare;
 
-    return { makePlayerMove };
+    return { makePlayerMove, getSelectedSquare };
 })();
 
 
+const win = (function() {
+    let winCondition = false;
+
+    const getWinMessage = function (activePlayerInfo) {
+        if (winCondition === false) {
+            alert("It's a tie...");
+            winCondition = false;
+        }
+        else {
+            alert(`${activePlayerInfo.playerName} has won!`);
+            winCondition = false;
+        }
+    }
+    const getWinCondition = function (activePlayerInfo) {
+        const activePlayerMark = activePlayerInfo.playerMark;
+        const wins = [[1, 2, 3], [1, 4, 7], [1, 5, 9], [2, 5, 8], [3, 6, 9], [3, 5, 7], [4, 5, 6], [7, 8, 9]];
+        for (let i = 0; i < wins.length; i++) {
+            let numberOfIdenticalMarks = 0;
+            for (let j = 0; j < 3; j++) {
+                if (
+                    gameBoard.getSquareStatus(wins[i][j]) === activePlayerMark) {
+                    numberOfIdenticalMarks++;
+                }
+            }
+            if (numberOfIdenticalMarks === 3) {
+                return winCondition = true;
+            }
+        }
+        return winCondition;
+    }
+
+    return { getWinMessage, getWinCondition };
+    })();
+
 gamePlay.startGame();
-// gameBoard.createGameSquares()
-// console.log(gameBoard.gameSquares)
-// console.log(gameBoard.getSquareStatus(1))
+while (prompt("Play again?", "yes") === "yes") {
+    gamePlay.startGame();
+}
