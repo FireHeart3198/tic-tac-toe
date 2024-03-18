@@ -39,94 +39,78 @@ const gamePlay = (function() {
         gameBoard.createGameSquares();
         player1 = player(prompt("What's your name Player 1?", "Tic"), "X").getPlayerInfo();
         player2 = player(prompt("What's your name Player 2?", "Tac"), "O").getPlayerInfo();
+        displayBoard.loadBoard();
+        activePlayer = player1;
         round = 1;
-        do {
-            activePlayer = (round % 2 === 0) ? player2 : player1;
+    };
+    const nextTurn = function() {
+        if (win.getWinCondition(activePlayer)) {
+            win.getWinMessage(activePlayer);
+        } else if (round === 9) {
+            win.getTieMessage();
+        } else {activePlayer = (activePlayer === player1) ? player2 : player1;
             alert(`It's ${activePlayer.playerName}'s turn`);
-            turn.makePlayerMove(activePlayer);
-            round++;
-            displayBoard.updateBoard();
-        } while (!(win.getWinCondition(activePlayer)) && round <= 9);
-        win.getWinMessage(activePlayer);
-    }
-
-    return { startGame };
-})();
-
-
-const turn = (function() {
-    let selectedSquare;
-
-    const chooseSquare = function() {
-        selectedSquare = prompt("Which square (from 1-9) do you choose?");
-    }
-    const makePlayerMove = function(activePlayerInfo) {
-        let tries = 0;
-        do {
-            chooseSquare();
+        }
+    };
+    const makePlayerMove = function(selectedSquare) {
+        if (!win.getWinCondition(activePlayer)) {
             if (gameBoard.getSquareStatus(selectedSquare) === null) {
-                gameBoard.updateSquare(selectedSquare, activePlayerInfo.playerMark);
-                break;
+                gameBoard.updateSquare(selectedSquare, activePlayer.playerMark);
+                return true;
             }
-            alert("Please choose a free square");
-            tries++;
-        } while (tries < 3);
-        
-    }
-    const getSelectedSquare = () => selectedSquare;
+        }
+    };
 
-    return { makePlayerMove, getSelectedSquare };
+    return { startGame, nextTurn, makePlayerMove };
 })();
 
 
 const win = (function() {
-    let winCondition = false;
-
     const getWinMessage = function (activePlayerInfo) {
-        if (winCondition === false) {
-            alert("It's a tie...");
-            winCondition = false;
-        }
-        else {
-            alert(`${activePlayerInfo.playerName} has won!`);
-            winCondition = false;
-        }
-    }
+        alert(`${activePlayerInfo.playerName} has won!`);
+        };
+    const getTieMessage = function () {
+        alert("It's a tie...");
+    };
+
     const getWinCondition = function (activePlayerInfo) {
         const activePlayerMark = activePlayerInfo.playerMark;
         const wins = [[1, 2, 3], [1, 4, 7], [1, 5, 9], [2, 5, 8], [3, 6, 9], [3, 5, 7], [4, 5, 6], [7, 8, 9]];
         for (let i = 0; i < wins.length; i++) {
             let numberOfIdenticalMarks = 0;
             for (let j = 0; j < 3; j++) {
-                if (
-                    gameBoard.getSquareStatus(wins[i][j]) === activePlayerMark) {
+                if (gameBoard.getSquareStatus(wins[i][j]) === activePlayerMark) {
                     numberOfIdenticalMarks++;
                 }
             }
             if (numberOfIdenticalMarks === 3) {
-                return winCondition = true;
+                return true;
             }
         }
-        return winCondition;
-    }
+        return false;
+    };
 
-    return { getWinMessage, getWinCondition };
+    return { getWinMessage, getTieMessage, getWinCondition };
     })();
 
 
 const displayBoard = (function() {
     const boardSquares = document.querySelectorAll(".square");
 
-    const updateBoard = function() {
-        for (let i = 0; i < boardSquares.length; i++) {
-        boardSquares[i].textContent = gameBoard.getSquareStatus(i+1);
+    function chooseSquare(e) {
+        let selectedSquare = e.target.getAttribute('data-square-number');
+        if(gamePlay.makePlayerMove(selectedSquare)) {
+            e.target.textContent = gameBoard.getSquareStatus(selectedSquare);
+            gamePlay.nextTurn();
         }
     }
+    const loadBoard = function() {
+        for (let i = 0; i < boardSquares.length; i++) {
+            boardSquares[i].addEventListener('click', chooseSquare);
+        }
+    };
 
-    return { updateBoard };
+    return { loadBoard };
 })();
 
 gamePlay.startGame();
-while (prompt("Play again?", "yes") === "yes") {
-    gamePlay.startGame();
-}
