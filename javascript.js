@@ -35,10 +35,10 @@ const gamePlay = (function() {
     let activePlayer;
     let round;
 
-    const startGame = function() {
+    const startGame = function(player1Name, player2Name) {
         gameBoard.createGameSquares();
-        player1 = player(prompt("What's your name Player 1?", "Tic"), "X").getPlayerInfo();
-        player2 = player(prompt("What's your name Player 2?", "Tac"), "O").getPlayerInfo();
+        player1 = player(player1Name, "X").getPlayerInfo();
+        player2 = player(player2Name, "O").getPlayerInfo();
         display.loadBoard();
         activePlayer = player1;
         round = 1;
@@ -99,6 +99,9 @@ const win = (function() {
 const display = (function() {
     const boardSquares = document.querySelectorAll(".square");
     const startButton = document.querySelector(".start-button");
+    const dialog = document.querySelector("dialog");
+    const form = document.querySelector("form");
+    const confirmButton = document.querySelector(".confirm");
 
     function chooseSquare(e) {
         let selectedSquare = e.target.getAttribute('data-square-number');
@@ -114,7 +117,22 @@ const display = (function() {
         }
     };
     const start = function() {
-        startButton.addEventListener('click', gamePlay.startGame);
+        form.addEventListener("formdata", formHandler);
+        confirmButton.addEventListener('click', confirmHandler);
+        startButton.addEventListener('click', () => {
+            dialog.showModal();
+        });
+    };
+    function formHandler(e) {
+        const names = e.formData;
+        player1Name = names.get("player-1");
+        player2Name = names.get("player-2");
+        gamePlay.startGame(player1Name, player2Name);
+    }
+    function confirmHandler(e) {
+        e.preventDefault();
+        new FormData(form);
+        dialog.close();
     }
 
     return { loadBoard, start };
