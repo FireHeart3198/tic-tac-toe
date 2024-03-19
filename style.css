@@ -42,6 +42,27 @@ header {
 
 .start-button {
     grid-area: button;
+    justify-self: center;
+}
+
+button {
+    background-color: transparent;
+    color: rgb(255, 255, 255);
+    width: max-content;
+    padding: 15px 20px;
+    border-radius: 20px; 
+    border: solid 4px rgb(41, 212, 235);
+    margin-top: 30px;
+    appearance: none;
+    font-size: 3rem;
+    font-weight: 600;
+    font-family: inherit;
+    box-shadow: 2px 3px 8px 2px rgba(255, 255, 255, 0.2);;
+}
+
+button:hover {
+    cursor: pointer;
+    outline: #4e2ad0 solid;
 }
 
 .player {
@@ -53,6 +74,7 @@ header {
     min-width: max-content;
     border: solid 8px #ffff;
     border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+    margin-top: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -75,15 +97,6 @@ header {
     grid-template-columns: 250px 12px 250px 12px 250px;
     grid-template-rows: 250px 12px 250px 12px 250px;
 } 
-
-.square {
-    font-size: 15rem;
-    font-family: eraser, 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    color: rgb(95, 215, 255);
-    height: 250px;
-    width: 250px;
-    display: flex;
-}
 
 .border {
     box-sizing: content-box;
@@ -115,6 +128,15 @@ header {
     border-radius: 255px 15px 225px 15px/15px 225px 100px 255px;
     grid-row: 4;
     grid-column: 1/6;
+}
+
+.square {
+    font-size: 15rem;
+    font-family: eraser, 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: rgb(95, 215, 255);
+    height: 250px;
+    width: 250px;
+    display: flex;
 }
 
 [data-square-number="1"]{
