@@ -1,3 +1,13 @@
+@font-face {
+    font-family: eraser;
+    src: url(/fonts/EraserRegular-webfont.woff);
+}
+
+@font-face {
+    font-family: addex;
+        src: url(/fonts/AddeX.ttf);
+}
+
 html {
     box-sizing: border-box;
 }
@@ -9,6 +19,8 @@ body {
     display: grid;
     grid-template-rows: 1fr 10fr;
     height: 90vh;
+    background-color: rgba(0, 0, 0, 0.894);
+    font-family: addex, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 main {
@@ -23,13 +35,17 @@ main {
     grid-area: button;
 }
 
+.player {
+    color: white;
+    font-size: 100px;
+}
+
 .player.one {
     grid-area: player1;
 }
 
 .game-board {
     grid-area: gameboard;
-    position: relative;
 }
 
 .player.two {
@@ -42,33 +58,39 @@ main {
     grid-template-rows: 200px 12px 200px 12px 200px;
 } 
 
+.square {
+    font-size: 12rem;
+    font-family: eraser, 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: rgb(95, 215, 255);
+}
+
 .border {
     box-sizing: content-box;
 ;}
 
 .border.right {
-    border-right: solid 12px #41403E;
+    border-right: double 12px #ffff;
     border-radius: 15px /15px 225px 15px 255px;
     grid-column: 4;
     grid-row: 1/6;
 }
 
 .border.left {
-    border-left: solid 12px #41403E;
-    border-radius: 15px /15px 225px 15px 255px;
+    border-left: double 12px #ffff;
+    border-radius: 15px /15px 300px 15px 255px;
     grid-column: 2;
     grid-row: 1/6;
 }
 
 .border.top {
-    border-top: solid 12px #41403E;
+    border-top: double 12px #ffff;
     border-radius: 255px 15px 225px 15px/80px 15px 255px;
     grid-row: 2;
     grid-column: 1/6;
 }
 
 .border.bottom {
-    border-bottom: solid 12px #41403E;
+    border-bottom: double 12px #ffff;
     border-radius: 255px 15px 225px 15px/15px 225px 100px 255px;
     grid-row: 4;
     grid-column: 1/6;
