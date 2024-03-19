@@ -33,7 +33,7 @@
                 <div>Player 2</div>
                 <div class="name"></div>
             </div>
-            <dialog>
+            <dialog class="form" open>
                 <form action="" method="post">
                     <h1>Welcome Players! What are your names?</h1>
                     <ul>
@@ -49,6 +49,14 @@
                     <button value="cancel" formmethod="dialog">Cancel</button>
                     <button class="confirm" value="default">Ready to Play!</button>
                 </form>
+            </dialog>
+            <dialog class="win">
+                <p></p>
+                <button class="close">Close</button>
+            </dialog>
+            <dialog class="tie">
+                <p>It's a tie...</p>
+                <button class="close">Close</button>
             </dialog>
         </main>
     </body>

@@ -46,14 +46,14 @@ const gamePlay = (function() {
     };
     const nextTurn = function() {
         if (win.getWinCondition(activePlayer)) {
-            display.removePlayerDisplay();
-            win.getWinMessage(activePlayer);
+            display.removePlayerTurnDisplays();
+            display.displayWinningMessage(activePlayer.playerName);
         } else if (round === 9) {
-            display.removePlayerDisplay();
-            win.getTieMessage();
+            display.removePlayerTurnDisplays();
+            display.displayTieMessage();
         } else {
             activePlayer = (activePlayer === player1) ? player2 : player1;
-            display.updatePlayerDisplays(activePlayer.playerNumber);
+            display.updatePlayerTurnDisplays(activePlayer.playerNumber);
             round++;
         }
     };
@@ -72,6 +72,7 @@ const gamePlay = (function() {
 
 const win = (function() {
     const getWinMessage = function (activePlayerInfo) {
+
         alert(`${activePlayerInfo.playerName} has won!`);
         };
     const getTieMessage = function () {
@@ -102,13 +103,18 @@ const win = (function() {
 const display = (function() {
     const boardSquares = document.querySelectorAll(".square");
     const startButton = document.querySelector(".start-button");
-    const dialog = document.querySelector("dialog");
+    const formDialog = document.querySelector("dialog.form");
     const form = document.querySelector("form");
-    const confirmButton = document.querySelector(".confirm");
+    const confirmFormButton = document.querySelector("form .confirm");
     const player1Display = document.querySelector(".player.one");
     const player2Display = document.querySelector(".player.two");
     const player1Name = document.querySelector(".player.one .name");
     const player2Name = document.querySelector(".player.two .name");
+    const winnerDialog = document.querySelector("dialog.win");
+    const winnerMessage = document.querySelector("dialog.win p");
+    const tieDialog = document.querySelector("dialog.tie");
+    const closeWinButton = document.querySelector(".win .close");
+    const closeTieButton = document.querySelector(".tie .close");
 
     function chooseSquare(e) {
         let selectedSquare = e.target.getAttribute('data-square-number');
@@ -124,10 +130,11 @@ const display = (function() {
         }
     };
     const start = function() {
-        form.addEventListener("formdata", formHandler);
-        confirmButton.addEventListener('click', confirmHandler);
+        addEventListeners();
         startButton.addEventListener('click', () => {
-            dialog.showModal();
+            winnerDialog.close();
+            tieDialog.close();
+            formDialog.showModal();
         });
     };
     function formHandler(e) {
@@ -142,20 +149,36 @@ const display = (function() {
     function confirmHandler(e) {
         e.preventDefault();
         new FormData(form);
-        dialog.close();
+        formDialog.close();
     }
-    const updatePlayerDisplays = function(activePlayer) {
+    const updatePlayerTurnDisplays = function(activePlayer) {
         const newPlayer = (activePlayer === 'one') ? player1Display : player2Display;
         const pastPlayer = (newPlayer === player1Display) ? player2Display : player1Display;
         pastPlayer.classList.remove("current");
         newPlayer.classList.add("current");
     }
-    const removePlayerDisplay = function() {
+    const removePlayerTurnDisplays = function() {
         player1Display.classList.remove("current");
         player2Display.classList.remove("current");
     }
+    const displayWinningMessage = function(winner) {
+        console.log(winnerMessage)
+        winnerMessage.textContent = `${winner} won!`;
+        winnerDialog.show();
+    }
+    const displayTieMessage = function() {
+        tieDialog.show();
+    }
+    function addEventListeners() {
+        form.addEventListener("formdata", formHandler);
+        confirmFormButton.addEventListener('click', confirmHandler);
+        closeWinButton.addEventListener('click', () => winnerDialog.close())
+        closeTieButton.addEventListener('click', () => tieDialog.close())
+    }
 
-    return { loadBoard, start, updatePlayerDisplays, removePlayerDisplay };
+    return { loadBoard, start, 
+                updatePlayerTurnDisplays, removePlayerTurnDisplays, 
+                displayWinningMessage, displayTieMessage };
 })();
 
 display.start();
