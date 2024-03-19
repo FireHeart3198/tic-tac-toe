@@ -15,15 +15,15 @@
                 <div class="name"></div>
             </div>
             <div class="game-board">
-                <div class="square" data-square-number="1">X</div>
-                <div class="square" data-square-number="2">o</div>
-                <div class="square" data-square-number="3">x</div>
-                <div class="square" data-square-number="4">o</div>
-                <div class="square" data-square-number="5">X</div>
-                <div class="square" data-square-number="6">X</div>
-                <div class="square" data-square-number="7">o</div>
-                <div class="square" data-square-number="8">x</div>
-                <div class="square" data-square-number="9">o</div>
+                <div class="square" data-square-number="1"></div>
+                <div class="square" data-square-number="2"></div>
+                <div class="square" data-square-number="3"></div>
+                <div class="square" data-square-number="4"></div>
+                <div class="square" data-square-number="5"></div>
+                <div class="square" data-square-number="6"></div>
+                <div class="square" data-square-number="7"></div>
+                <div class="square" data-square-number="8"></div>
+                <div class="square" data-square-number="9"></div>
                 <div class="border right"></div>
                 <div class="border left"></div>
                 <div class="border top"></div>
@@ -33,7 +33,7 @@
                 <div>Player 2</div>
                 <div class="name"></div>
             </div>
-            <dialog class="form" open>
+            <dialog class="form">
                 <form action="" method="post">
                     <h1>Welcome Players! What are your names?</h1>
                     <ul>
@@ -46,8 +46,10 @@
                             <input type="text" id="player-2" name="player-2" value="Tac">
                         </li>
                     </ul>
-                    <button value="cancel" formmethod="dialog">Cancel</button>
-                    <button class="confirm" value="default">Ready to Play!</button>
+                    <div class="button-container">
+                        <button value="cancel" formmethod="dialog">Cancel</button>
+                        <button class="confirm" value="default">Ready to Play!</button>
+                    </div>
                 </form>
             </dialog>
             <dialog class="win">

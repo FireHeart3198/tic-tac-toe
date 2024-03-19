@@ -143,7 +143,7 @@ const display = (function() {
         let player2 = names.get("player-2");
         player1Name.textContent = player1;
         player2Name.textContent = player2;
-        player1Display.classList.add("current")
+        player1Display.classList.add("current");
         gamePlay.startGame(player1, player2);
     }
     function confirmHandler(e) {
@@ -156,29 +156,28 @@ const display = (function() {
         const pastPlayer = (newPlayer === player1Display) ? player2Display : player1Display;
         pastPlayer.classList.remove("current");
         newPlayer.classList.add("current");
-    }
+    };
     const removePlayerTurnDisplays = function() {
         player1Display.classList.remove("current");
         player2Display.classList.remove("current");
-    }
+    };
     const displayWinningMessage = function(winner) {
-        console.log(winnerMessage)
         winnerMessage.textContent = `${winner} won!`;
         winnerDialog.show();
-    }
+    };
     const displayTieMessage = function() {
         tieDialog.show();
-    }
+    };
     function addEventListeners() {
         form.addEventListener("formdata", formHandler);
         confirmFormButton.addEventListener('click', confirmHandler);
-        closeWinButton.addEventListener('click', () => winnerDialog.close())
-        closeTieButton.addEventListener('click', () => tieDialog.close())
+        closeWinButton.addEventListener('click', () => winnerDialog.close());
+        closeTieButton.addEventListener('click', () => tieDialog.close());
     }
 
     return { loadBoard, start, 
-                updatePlayerTurnDisplays, removePlayerTurnDisplays, 
-                displayWinningMessage, displayTieMessage };
+            updatePlayerTurnDisplays, removePlayerTurnDisplays, 
+            displayWinningMessage, displayTieMessage };
 })();
 
 display.start();

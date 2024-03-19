@@ -150,42 +150,105 @@ button:hover {
     display: flex;
 }
 
-[data-square-number="1"]{
+[data-square-number="1"] {
     justify-content: end;
 }
 
-[data-square-number="2"]{
+[data-square-number="2"] {
     justify-content: end;
     padding-right: 30px;
 }
 
-[data-square-number="3"]{
+[data-square-number="3"] {
     justify-content: center;
 }
-[data-square-number="4"]{
+[data-square-number="4"] {
     padding-left: 30px;
 }
 
-[data-square-number="5"]{
+[data-square-number="5"] {
     justify-content: center;
     padding-right: 20px;
     padding-top: 10px;
 }
-[data-square-number="6"]{
+[data-square-number="6"] {
     justify-content: start;
     padding-left: 10px;
     padding-bottom: 10px;
 }
-[data-square-number="7"]{
+[data-square-number="7"] {
     justify-content: center;
     padding-top: 20px;
 }
-[data-square-number="8"]{
+[data-square-number="8"] {
     justify-content: center;
     padding-left: 10px;
     padding-top: 50px;
 }
-[data-square-number="9"]{
+[data-square-number="9"] {
     justify-content: end;
     padding-right: 20px;
+}
+
+dialog.form[open] {
+    margin-top: 200px;
+    font-size: 1.8rem;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 20px;
+    justify-content: space-around;
+}
+
+li {
+    font-size: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+input {
+    font-size: 2rem;
+    display: block;
+    appearance: none;
+    height: 40px;
+    border-radius: 10px;
+    border: #E5E7EB solid;
+}
+
+dialog.form button {
+    color: #000;
+    padding: 10px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+dialog.win[open],
+dialog.tie[open] {
+    margin-top: 200px;
+    font-size: 6rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 70px;
+    min-width: max-content;
+}
+
+p {
+    margin: 0;
+}
+
+dialog.win button,
+dialog.tie button {
+    color: black;
+    font-size: 3rem;
 }
