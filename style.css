@@ -77,13 +77,12 @@ header {
 } 
 
 .square {
-    font-size: 12rem;
+    font-size: 15rem;
     font-family: eraser, 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     color: rgb(95, 215, 255);
-    text-align: center;
-    margin: auto;
     height: 250px;
     width: 250px;
+    display: flex;
 }
 
 .border {
@@ -116,4 +115,44 @@ header {
     border-radius: 255px 15px 225px 15px/15px 225px 100px 255px;
     grid-row: 4;
     grid-column: 1/6;
+}
+
+[data-square-number="1"]{
+    justify-content: end;
+}
+
+[data-square-number="2"]{
+    justify-content: end;
+    padding-right: 30px;
+}
+
+[data-square-number="3"]{
+    justify-content: center;
+}
+[data-square-number="4"]{
+    padding-left: 30px;
+}
+
+[data-square-number="5"]{
+    justify-content: center;
+    padding-right: 20px;
+    padding-top: 10px;
+}
+[data-square-number="6"]{
+    justify-content: start;
+    padding-left: 10px;
+    padding-bottom: 10px;
+}
+[data-square-number="7"]{
+    justify-content: center;
+    padding-top: 20px;
+}
+[data-square-number="8"]{
+    justify-content: center;
+    padding-left: 10px;
+    padding-top: 50px;
+}
+[data-square-number="9"]{
+    justify-content: end;
+    padding-right: 20px;
 }

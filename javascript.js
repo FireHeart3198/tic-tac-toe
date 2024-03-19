@@ -48,8 +48,10 @@ const gamePlay = (function() {
             win.getWinMessage(activePlayer);
         } else if (round === 9) {
             win.getTieMessage();
-        } else {activePlayer = (activePlayer === player1) ? player2 : player1;
+        } else {
+            activePlayer = (activePlayer === player1) ? player2 : player1;
             alert(`It's ${activePlayer.playerName}'s turn`);
+            round++;
         }
     };
     const makePlayerMove = function(selectedSquare) {
