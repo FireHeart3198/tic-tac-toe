@@ -92,6 +92,17 @@ button:hover {
     grid-area: player2;
 }
 
+.current {
+    box-shadow: 1px 1px 10px 5px #0ff;
+}
+
+.current::after {
+    content: "Your turn!";
+    color: white;
+    position: relative;
+    top: 30px;
+}
+
 .game-board {
     display: grid;
     grid-template-columns: 250px 12px 250px 12px 250px;

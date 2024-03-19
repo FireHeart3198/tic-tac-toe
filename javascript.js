@@ -17,10 +17,11 @@ const gameBoard = (function() {
 })();
 
 
-function player(playerName, playerMark) {
+function player(playerName, playerMark, playerNumber) {
     const playerInfo = {
         playerName,
         playerMark,
+        playerNumber,
     };
 
     const getPlayerInfo = () => playerInfo;
@@ -37,20 +38,22 @@ const gamePlay = (function() {
 
     const startGame = function(player1Name, player2Name) {
         gameBoard.createGameSquares();
-        player1 = player(player1Name, "X").getPlayerInfo();
-        player2 = player(player2Name, "O").getPlayerInfo();
+        player1 = player(player1Name, "X", "one").getPlayerInfo();
+        player2 = player(player2Name, "O", "two").getPlayerInfo();
         display.loadBoard();
         activePlayer = player1;
         round = 1;
     };
     const nextTurn = function() {
         if (win.getWinCondition(activePlayer)) {
+            display.removePlayerDisplay();
             win.getWinMessage(activePlayer);
         } else if (round === 9) {
+            display.removePlayerDisplay();
             win.getTieMessage();
         } else {
             activePlayer = (activePlayer === player1) ? player2 : player1;
-            alert(`It's ${activePlayer.playerName}'s turn`);
+            display.updatePlayerDisplays(activePlayer.playerNumber);
             round++;
         }
     };
@@ -102,6 +105,10 @@ const display = (function() {
     const dialog = document.querySelector("dialog");
     const form = document.querySelector("form");
     const confirmButton = document.querySelector(".confirm");
+    const player1Display = document.querySelector(".player.one");
+    const player2Display = document.querySelector(".player.two");
+    const player1Name = document.querySelector(".player.one .name");
+    const player2Name = document.querySelector(".player.two .name");
 
     function chooseSquare(e) {
         let selectedSquare = e.target.getAttribute('data-square-number');
@@ -125,17 +132,30 @@ const display = (function() {
     };
     function formHandler(e) {
         const names = e.formData;
-        player1Name = names.get("player-1");
-        player2Name = names.get("player-2");
-        gamePlay.startGame(player1Name, player2Name);
+        let player1 = names.get("player-1");
+        let player2 = names.get("player-2");
+        player1Name.textContent = player1;
+        player2Name.textContent = player2;
+        player1Display.classList.add("current")
+        gamePlay.startGame(player1, player2);
     }
     function confirmHandler(e) {
         e.preventDefault();
         new FormData(form);
         dialog.close();
     }
+    const updatePlayerDisplays = function(activePlayer) {
+        const newPlayer = (activePlayer === 'one') ? player1Display : player2Display;
+        const pastPlayer = (newPlayer === player1Display) ? player2Display : player1Display;
+        pastPlayer.classList.remove("current");
+        newPlayer.classList.add("current");
+    }
+    const removePlayerDisplay = function() {
+        player1Display.classList.remove("current");
+        player2Display.classList.remove("current");
+    }
 
-    return { loadBoard, start };
+    return { loadBoard, start, updatePlayerDisplays, removePlayerDisplay };
 })();
 
 display.start();
