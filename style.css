@@ -82,6 +82,8 @@ header {
     color: rgb(95, 215, 255);
     text-align: center;
     margin: auto;
+    height: 250px;
+    width: 250px;
 }
 
 .border {
